@@ -24,6 +24,10 @@ public final class LeafNode implements Node{
   public String toString(){
     return token.toString();
   }
+  
+  public Node copy(){
+  	return new LeafNode(token);
+  }
 
   public List<Token> toList(){
     return Arrays.asList(token);

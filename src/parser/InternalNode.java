@@ -5,21 +5,21 @@ import java.util.stream.Collectors;
 
 public final class InternalNode implements Node{
   
-  private final List<Node> children;
+  private List<Node> children;
   private String computedString;
   private List<Token> computedTokenList;
-
+  
   private InternalNode(List<Node> childs){
     // childs are copied before being put in children
-    children = new ArrayList<Node>();
+    List<Node> mutableChildren = new ArrayList<Node>();
     for(Node child : childs){
-      if(child instanceof InternalNode){
-        children.add(InternalNode.build(((InternalNode)child).getChildren()));
-      }else{
-        // child is a leaf node
-        children.add(LeafNode.build(((LeafNode)child).getToken()));
-      }
+      mutableChildren.add(child.copy());
     }
+    children = Collections.unmodifiableList(mutableChildren);
+  }
+  
+  public Node copy(){
+  	return new InternalNode(getChildren());
   }
 
   public static InternalNode build(List<Node> childs){
@@ -33,12 +33,7 @@ public final class InternalNode implements Node{
     // return copy of children
     List<Node> list = new ArrayList<Node>();
     for(Node child : children){
-      if(child instanceof InternalNode){
-        list.add(InternalNode.build(((InternalNode)child).getChildren()));
-      }else{
-        // child is a leaf node
-        list.add(LeafNode.build(((LeafNode)child).getToken()));
-      }
+      list.add(child.copy());
     }
     return list;
   }
