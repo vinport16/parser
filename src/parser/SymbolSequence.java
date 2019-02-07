@@ -1,11 +1,11 @@
-package parser.bin;
+package parser;
 
 import java.util.*;
 
 final class SymbolSequence {
 	
 	private final List<Symbol> production;
-	final static SymbolSequence EPSILON = new List<Symbol>();
+	final static SymbolSequence EPSILON = new SymbolSequence(new ArrayList<Symbol>());
 	
 	private SymbolSequence(List<Symbol> production) {
 		this.production = production;
@@ -15,24 +15,37 @@ final class SymbolSequence {
 		if (production == null) {
 			throw new NullPointerException("production provided is null");
 		}
-		return SymbolSequence(production);
+		return new SymbolSequence(production);
 	}
 	
 	static final SymbolSequence build(Symbol... symbols) {
-		
+		List<Symbol> production = new ArrayList<Symbol>();
+		for (Symbol symbol : symbols) {
+			production.add(symbol);
+		}
+		return new SymbolSequence(production);
 	}
 	
-	public ParseState match(List<Token> input)) {
+	public ParseState match(List<Token> input) {
 		if (input == null) {
 			throw new NullPointerException("input provided is null");
 		}
 		List<Token> remainder = input;
-		List<Token> children = new List<Token>();
-		
-		
+		List<Node> children = new ArrayList<Node>();
+		ParseState result;
+		for (Symbol symbol : production) {
+			result = symbol.parse(remainder);
+			if (!result.getSuccess()) {
+				return ParseState.FAILURE;
+			} else {
+				children.add(result.getNode());
+				remainder = result.getRemainder();
+			}
+		}
+		return ParseState.build((InternalNode.build(children)), remainder);		
 	}
 	
-	public toString() {
+	public String toString() {
 		return production.toString();
 	}
 }
