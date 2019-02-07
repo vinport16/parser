@@ -38,13 +38,12 @@ public enum NonTerminalSymbol implements Symbol{
 		productions.put(FACTOR, produced);
 	}
 	
-	private ParseState parseSegment(NonTerminalSymbol find, List<Token> input){
-		if(productions.get(find).)
-		return ParseState.FAILURE;
+	static final Optional<Node> parseInput(List<Token> input){
+		return Optional.of(productions.get(EXPRESSION).get(0).match(input).getNode());
 	}
 	
 	public ParseState parse(List<Token> input){
-		
+
 		return ParseState.FAILURE;
 	}
 }
