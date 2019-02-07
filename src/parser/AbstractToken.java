@@ -1,4 +1,4 @@
-package src.parser;
+package parser;
 
 public abstract class AbstractToken implements Token {
 
