@@ -47,7 +47,7 @@ final class SymbolSequence {
 			result = symbol.parse(remainder);
 			if (!result.getSuccess()) {
 				return ParseState.FAILURE;
-			} else if (result.getNode().toList().size() != 0) {
+			} else {
 				children.add(result.getNode());
 				remainder = result.getRemainder();
 			}

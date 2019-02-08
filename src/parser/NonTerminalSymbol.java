@@ -40,19 +40,22 @@ public enum NonTerminalSymbol implements Symbol{
 	}
 	
 	static final Optional<Node> parseInput(List<Token> input){
-		return Optional.of(productions.get(EXPRESSION).get(0).match(input).getNode());
+		return Optional.of(EXPRESSION.parse(input).getNode());
 	}
 	
 	public ParseState parse(List<Token> input){
+		System.out.println(this+" in");
 		if(input == null) {
 			throw new NullPointerException("Argument cannot be null");
 		}
 		for(SymbolSequence s : productions.get(this)){
 			ParseState ps = s.match(input);
 			if(ps.getSuccess()){
+				System.out.println(this+" out");
 				return ps;
 			}
 		}
+		System.out.println(this+" bad");
 		return ParseState.FAILURE;
 	}
 }

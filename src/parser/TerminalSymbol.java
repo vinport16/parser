@@ -27,7 +27,7 @@ public enum TerminalSymbol implements Symbol{
 			return ParseState.FAILURE;
 		}
 		Token first = input.get(0);
-		if (tsl.contains(first.getType())) {
+		if (first.matches(this)) {
 			return ParseState.build(LeafNode.build(first), input.subList(1, input.size()));
 		} else {
 			return ParseState.FAILURE;
