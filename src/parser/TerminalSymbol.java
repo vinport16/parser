@@ -5,8 +5,10 @@ import java.util.*;
 public enum TerminalSymbol implements Symbol{
 	VARIABLE, PLUS, MINUS, TIMES, DIVIDE, OPEN, CLOSE;
 	
+	// TerminalSymbolList to check if token passed is of type TerminalSymbol
 	static ArrayList<TerminalSymbol> tsl = new ArrayList<TerminalSymbol>();
 	
+	// Populating TerminalSymbolList
 	static {
 		tsl.add(VARIABLE);
 		tsl.add(PLUS);
@@ -17,9 +19,11 @@ public enum TerminalSymbol implements Symbol{
 		tsl.add(CLOSE);
 	}
 	
+	// Parses the first token of the input to return a ParseState with a Leaf Node of
+	// the first token and the remainder of the list.
 	@Override
 	public ParseState parse(List<Token> input) {
-		if (input.size() == 0) {
+		if (input == null || input.isEmpty()) {
 			return ParseState.FAILURE;
 		}
 		Token first = input.get(0);

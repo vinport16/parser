@@ -33,5 +33,9 @@ public class Tests {
       for (Failure failure : result.getFailures()) {
         System.out.println(failure.toString());
       }
+      result = JUnitCore.runClasses(TerminalSymbolTest.class);
+      for (Failure failure : result.getFailures()) {
+          System.out.println(failure.toString());
+        }
     }
 }
