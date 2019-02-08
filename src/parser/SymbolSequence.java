@@ -37,12 +37,11 @@ final class SymbolSequence {
 			result = symbol.parse(remainder);
 			if (!result.getSuccess()) {
 				return ParseState.FAILURE;
-			} else {
+			} else if(result.getNode().toList().size() != 0) {
 				children.add(result.getNode());
 				remainder = result.getRemainder();
 			}
 		}
-		System.out.println("hello?");
 		System.out.println(InternalNode.build(children).toString());
 		return ParseState.build((InternalNode.build(children)), remainder);		
 	}

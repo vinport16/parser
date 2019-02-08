@@ -40,11 +40,13 @@ public enum NonTerminalSymbol implements Symbol{
 	}
 	
 	static final Optional<Node> parseInput(List<Token> input){
-		System.out.println("AAAA");
 		return Optional.of(productions.get(EXPRESSION).get(0).match(input).getNode());
 	}
 	
 	public ParseState parse(List<Token> input){
+		if(input == null) {
+			throw new NullPointerException("Argument cannot be null");
+		}
 		for(SymbolSequence s : productions.get(this)){
 			ParseState ps = s.match(input);
 			if(ps.getSuccess()){
