@@ -29,5 +29,9 @@ public class Tests {
       for (Failure failure : result.getFailures()) {
         System.out.println(failure.toString());
       }
+      result = JUnitCore.runClasses(NonTerminalSymbolTest.class);
+      for (Failure failure : result.getFailures()) {
+        System.out.println(failure.toString());
+      }
     }
 }

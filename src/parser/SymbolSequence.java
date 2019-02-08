@@ -42,6 +42,8 @@ final class SymbolSequence {
 				remainder = result.getRemainder();
 			}
 		}
+		System.out.println("hello?");
+		System.out.println(InternalNode.build(children).toString());
 		return ParseState.build((InternalNode.build(children)), remainder);		
 	}
 	

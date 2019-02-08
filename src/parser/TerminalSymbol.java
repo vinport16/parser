@@ -19,6 +19,9 @@ public enum TerminalSymbol implements Symbol{
 	
 	@Override
 	public ParseState parse(List<Token> input) {
+		if (input.size() == 0) {
+			return ParseState.FAILURE;
+		}
 		Token first = input.get(0);
 		if (tsl.contains(first.getType())) {
 			return ParseState.build(LeafNode.build(first), input.subList(1, input.size()));
