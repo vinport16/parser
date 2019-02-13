@@ -12,7 +12,7 @@ public class NonTerminalSymbolTest{
 		
 		List<Token> tokens = new ArrayList<Token>();
 		tokens.add(Variable.build("a"));
-		assertEquals(NonTerminalSymbol.parseInput(tokens).toString(), "Optional[[[[[a]],[]],[]]]");
+		assertEquals( "Optional[[a]]", NonTerminalSymbol.parseInput(tokens).toString());
 		/*                 [EXPRESSION]
 		 *         [[TERM]            [EXPRESSION_TAIL]]
 		 *   [[[UNARY]  [TERM_TAIL]]  [EPSILON]]]
@@ -25,7 +25,7 @@ public class NonTerminalSymbolTest{
 		tokens.add(Variable.build("a"));
 		tokens.add(Connector.build(TerminalSymbol.PLUS));
 		tokens.add(Variable.build("b"));
-		assertEquals(NonTerminalSymbol.parseInput(tokens).toString(), "Optional[[[[[a]],[]],[+,[[[b]],[]],[]]]]");
+		assertEquals("Optional[[[a],[+,[b]]]]", NonTerminalSymbol.parseInput(tokens).toString());
 	
 	}
 

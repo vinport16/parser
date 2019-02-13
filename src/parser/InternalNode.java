@@ -63,7 +63,7 @@ public final class InternalNode implements Node{
   }
   
   public static class Builder {
-	  private List<Node> children;
+	  private List<Node> children = new ArrayList();
 	  
 	  public boolean addChild(Node node) {
 		  if (node == null) {
@@ -75,13 +75,13 @@ public final class InternalNode implements Node{
 	  
 	  public Builder simplify() {
 		  children = children.stream().filter(child -> child.isFruitful()).collect(Collectors.toList());
-		  if (children.size() == 1) {
+		  if (children.size() == 1 && children.get(0).getChildren() != null) {
 			  children = children.get(0).getChildren();
 		  }
 		  return this;
 	  }
 	  
-	  public InternalNode build() {
+	  public Node build() {
 		  return InternalNode.build(children);
 	  }
   }
