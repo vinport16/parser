@@ -18,11 +18,7 @@ final class ParseState {
 	}
 	
 	public static ParseState build(Node node, List<Token> remainder){
-		if(node == null || remainder == null) {
-			throw new NullPointerException("Cannot build ParseState with null parameters");
-		}else {
-			return new ParseState(true, node, remainder.stream().collect(Collectors.toList()));
-		}
+		return new ParseState(true, Objects.requireNonNull(node), Objects.requireNonNull(remainder).stream().collect(Collectors.toList()));
 	}
 	
 	public boolean getSuccess(){

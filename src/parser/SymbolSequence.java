@@ -29,18 +29,10 @@ final class SymbolSequence {
 		return new SymbolSequence(production);
 	}
 	
-	// Helper method to check if input is null
-	private void checkIfInputIsNull(List<Token> input) {
-		if (input == null) {
-			throw new NullPointerException("Input provided is null");
-		}
-	}
-	
 	// Returns a ParseState with node containing all non-empty parsed tokens
 	// and the remainder
 	public ParseState match(List<Token> input) {
-		checkIfInputIsNull(input);
-		List<Token> remainder = input;
+		List<Token> remainder = Objects.requireNonNull(input);
 		List<Node> children = new ArrayList<Node>();
 		ParseState result;
 		for (Symbol symbol : production) {
@@ -52,7 +44,6 @@ final class SymbolSequence {
 				remainder = result.getRemainder();
 			}
 		}
-		System.out.println(InternalNode.build(children).toString());
 		return ParseState.build((InternalNode.build(children)), remainder);		
 	}
 	

@@ -7,6 +7,7 @@ public enum NonTerminalSymbol implements Symbol{
 	private static Map<NonTerminalSymbol, List<SymbolSequence>> productions;
 	
 	static {
+		// Create and populate productions
 		productions = new HashMap();
 		List<SymbolSequence> produced = new ArrayList<SymbolSequence>();
 		produced.add(SymbolSequence.build(TERM, EXPRESSION_TAIL));
@@ -39,23 +40,21 @@ public enum NonTerminalSymbol implements Symbol{
 		productions.put(FACTOR, produced);
 	}
 	
+	// Parses a list of tokens into an expression tree
+	// Returns Optional ParseState with node as the root of the tree
 	static final Optional<Node> parseInput(List<Token> input){
-		return Optional.of(EXPRESSION.parse(input).getNode());
+		return Optional.ofNullable(EXPRESSION.parse(Objects.requireNonNull(input)).getNode());
 	}
 	
+	// Parses a list of tokens into one of its own symbol lists
+	// Returns ParseState if successful, ParseState.FAILURE otherwise
 	public ParseState parse(List<Token> input){
-		System.out.println(this+" in");
-		if(input == null) {
-			throw new NullPointerException("Argument cannot be null");
-		}
 		for(SymbolSequence s : productions.get(this)){
-			ParseState ps = s.match(input);
+			ParseState ps = s.match(Objects.requireNonNull(input));
 			if(ps.getSuccess()){
-				System.out.println(this+" out");
 				return ps;
 			}
 		}
-		System.out.println(this+" bad");
 		return ParseState.FAILURE;
 	}
 }
