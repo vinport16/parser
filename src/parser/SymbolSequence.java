@@ -33,18 +33,20 @@ final class SymbolSequence {
 	// and the remainder
 	public ParseState match(List<Token> input) {
 		List<Token> remainder = Objects.requireNonNull(input);
-		List<Node> children = new ArrayList<Node>();
+		//List<Node> children = new ArrayList<Node>();
+		InternalNode.Builder builder = new InternalNode.Builder();
 		ParseState result;
 		for (Symbol symbol : production) {
 			result = symbol.parse(remainder);
 			if (!result.getSuccess()) {
 				return ParseState.FAILURE;
 			} else {
-				children.add(result.getNode());
+				builder.addChild(result.getNode());
 				remainder = result.getRemainder();
 			}
 		}
-		return ParseState.build((InternalNode.build(children)), remainder);		
+		builder.simplify();
+		return ParseState.build(builder.build(), remainder);		
 	}
 	
 	public String toString() {

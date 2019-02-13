@@ -61,5 +61,29 @@ public final class InternalNode implements Node{
   public boolean isFruitful() {
   	return this.getChildren().size() > 0;
   }
+  
+  public static class Builder {
+	  private List<Node> children;
+	  
+	  public boolean addChild(Node node) {
+		  if (node == null) {
+			  return false;
+		  }
+		  children.add(node);
+		  return true;
+	  }
+	  
+	  public Builder simplify() {
+		  children = children.stream().filter(child -> child.isFruitful()).collect(Collectors.toList());
+		  if (children.size() == 1) {
+			  children = children.get(0).getChildren();
+		  }
+		  return this;
+	  }
+	  
+	  public InternalNode build() {
+		  return InternalNode.build(children);
+	  }
+  }
 
 }
