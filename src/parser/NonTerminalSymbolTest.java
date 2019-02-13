@@ -15,9 +15,9 @@ public class NonTerminalSymbolTest{
 		assertEquals(NonTerminalSymbol.parseInput(tokens).toString(), "Optional[[[[[a]],[]],[]]]");
 		/*                 [EXPRESSION]
 		 *         [[TERM]            [EXPRESSION_TAIL]]
-		 *   [[[UNARY]  [TERM_TAIL]]  [[EPSILON]]]
-		 *  [[[[FACTOR]    [EPSILON]] [EPSILON]]]
-		 * [[[[[VARIABLE]] [EPSILON]] [EPSILON]]]
+		 *   [[[UNARY]  [TERM_TAIL]]  [EPSILON]]]
+		 *  [[[[FACTOR]    [EPSILON]] [       ]]]
+		 * [[[[[VARIABLE]] [       ]] [       ]]]
 		 * [[[[[   a    ]],[       ]],[       ]]] = [[[[[a]],[]],[]]]
 		 */
 		

@@ -32,5 +32,13 @@ public final class LeafNode implements Node{
   public List<Token> toList(){
     return Arrays.asList(token);
   }
+  
+  public List<Node> getChildren(){
+  	return null;
+  }
+  
+  public boolean isFruitful() {
+  	return true;
+  }
 
 }

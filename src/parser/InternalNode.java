@@ -57,5 +57,9 @@ public final class InternalNode implements Node{
     }
     return computedString;
   }
+  
+  public boolean isFruitful() {
+  	return this.getChildren().size() > 0;
+  }
 
 }
