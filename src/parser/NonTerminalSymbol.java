@@ -12,6 +12,9 @@ public enum NonTerminalSymbol implements Symbol{
 		productions = new HashMap();
 		Map<TerminalSymbol, SymbolSequence> produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.VARIABLE, SymbolSequence.build(TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(TERM, EXPRESSION_TAIL));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(EXPRESSION, produced);
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
@@ -21,7 +24,10 @@ public enum NonTerminalSymbol implements Symbol{
 		productions.put(EXPRESSION_TAIL, produced);
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
-		produced.add(SymbolSequence.build(UNARY, TERM_TAIL));
+		produced.put(TerminalSymbol.VARIABLE, SymbolSequence.build(UNARY, TERM_TAIL));
+		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(UNARY, TERM_TAIL));
+		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(UNARY, TERM_TAIL));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(TERM, produced);
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
@@ -32,12 +38,15 @@ public enum NonTerminalSymbol implements Symbol{
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, FACTOR));
-		produced.add(SymbolSequence.build(FACTOR));
+		produced.put(TerminalSymbol.VARIABLE, SymbolSequence.build(FACTOR));
+		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(FACTOR));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(UNARY, produced);
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(TerminalSymbol.OPEN, EXPRESSION, TerminalSymbol.CLOSE));
-		produced.add(SymbolSequence.build(TerminalSymbol.VARIABLE));
+		produced.put(TerminalSymbol.VARIABLE, SymbolSequence.build(TerminalSymbol.VARIABLE));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(FACTOR, produced);
 	}
 	
