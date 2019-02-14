@@ -4,38 +4,39 @@ import java.util.*;
 
 public enum NonTerminalSymbol implements Symbol{
 	EXPRESSION, EXPRESSION_TAIL, TERM, TERM_TAIL, UNARY, FACTOR;
-	private static Map<NonTerminalSymbol, List<SymbolSequence>> productions;
+	//private static Map<NonTerminalSymbol, List<SymbolSequence>> productions;
+	private static final Map<NonTerminalSymbol, Map<TerminalSymbol, SymbolSequence>> productions;
 	
 	static {
 		// Create and populate productions
 		productions = new HashMap();
-		List<SymbolSequence> produced = new ArrayList<SymbolSequence>();
-		produced.add(SymbolSequence.build(TERM, EXPRESSION_TAIL));
+		Map<TerminalSymbol, SymbolSequence> produced = new HashMap<TerminalSymbol, SymbolSequence>();
+		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(TERM, EXPRESSION_TAIL));
 		productions.put(EXPRESSION, produced);
 		
-		produced = new ArrayList<SymbolSequence>();
-		produced.add(SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL));
-		produced.add(SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL));
-		produced.add(SymbolSequence.EPSILON);
+		produced = new HashMap<TerminalSymbol, SymbolSequence>();
+		produced.put(TerminalSymbol.PLUS, SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(EXPRESSION_TAIL, produced);
 		
-		produced = new ArrayList<SymbolSequence>();
+		produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.add(SymbolSequence.build(UNARY, TERM_TAIL));
 		productions.put(TERM, produced);
 		
-		produced = new ArrayList<SymbolSequence>();
-		produced.add(SymbolSequence.build(TerminalSymbol.TIMES, TERM, EXPRESSION_TAIL));
-		produced.add(SymbolSequence.build(TerminalSymbol.DIVIDE, TERM, EXPRESSION_TAIL));
-		produced.add(SymbolSequence.EPSILON);
+		produced = new HashMap<TerminalSymbol, SymbolSequence>();
+		produced.put(TerminalSymbol.TIMES, SymbolSequence.build(TerminalSymbol.TIMES, TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.DIVIDE, SymbolSequence.build(TerminalSymbol.DIVIDE, TERM, EXPRESSION_TAIL));
+		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(TERM_TAIL, produced);
 		
-		produced = new ArrayList<SymbolSequence>();
-		produced.add(SymbolSequence.build(TerminalSymbol.MINUS, FACTOR));
+		produced = new HashMap<TerminalSymbol, SymbolSequence>();
+		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, FACTOR));
 		produced.add(SymbolSequence.build(FACTOR));
 		productions.put(UNARY, produced);
 		
-		produced = new ArrayList<SymbolSequence>();
-		produced.add(SymbolSequence.build(TerminalSymbol.OPEN, EXPRESSION, TerminalSymbol.CLOSE));
+		produced = new HashMap<TerminalSymbol, SymbolSequence>();
+		produced.put(TerminalSymbol.OPEN, SymbolSequence.build(TerminalSymbol.OPEN, EXPRESSION, TerminalSymbol.CLOSE));
 		produced.add(SymbolSequence.build(TerminalSymbol.VARIABLE));
 		productions.put(FACTOR, produced);
 	}
