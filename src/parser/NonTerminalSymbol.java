@@ -59,12 +59,10 @@ public enum NonTerminalSymbol implements Symbol{
 	// Parses a list of tokens into one of its own symbol lists
 	// Returns ParseState if successful, ParseState.FAILURE otherwise
 	public ParseState parse(List<Token> input){
-		for(SymbolSequence s : productions.get(this)){
-			ParseState ps = s.match(Objects.requireNonNull(input));
-			if(ps.getSuccess()){
-				return ps;
-			}
+		if(input.size() < 1) {
+			return productions.get(this).get(null).match(Objects.requireNonNull(input));
+		}else {
+			return productions.get(this).get(input.get(0).getType()).match(Objects.requireNonNull(input));
 		}
-		return ParseState.FAILURE;
 	}
 }
