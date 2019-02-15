@@ -59,7 +59,7 @@ public final class InternalNode implements Node{
   }
   
   public boolean isFruitful() {
-  	return this.getChildren().size() > 0;
+  	return (this.children != null && this.getChildren().size() > 0);
   }
   
   public static class Builder {
@@ -67,11 +67,7 @@ public final class InternalNode implements Node{
 	  
 	  // Adds child to children array if not null
 	  public boolean addChild(Node node) {
-		  if (node == null) {
-			  return false;
-		  }
-		  children.add(node);
-		  return true;
+		  return children.add(Objects.requireNonNull(node));
 	  }
 	  
 	  // Removes all childless nodes from the children list and
