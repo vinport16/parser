@@ -57,7 +57,8 @@ public enum NonTerminalSymbol implements Symbol{
 	// Parses a list of tokens into an expression tree
 	// Returns Optional ParseState with node as the root of the tree
 	static final Optional<Node> parseInput(List<Token> input){
-		ParseState parsedExpression = EXPRESSION.parse(Objects.requireNonNull(input));
+		//ParseState parsedExpression = EXPRESSION.parse(Objects.requireNonNull(input));
+		ParseState parsedExpression = SymbolSequence.build(EXPRESSION).match(Objects.requireNonNull(input));
 		if(parsedExpression.getSuccess()){
 			return Optional.ofNullable(parsedExpression.getNode());
 		}else {
