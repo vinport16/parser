@@ -46,7 +46,7 @@ final class SymbolSequence {
 				remainder = result.getRemainder();
 			}
 		}
-		builder.simplify();
+		builder = builder.simplify();
 		return ParseState.build(builder.build(), remainder);		
 	}
 	
