@@ -26,7 +26,7 @@ final class ParseState {
 	}
 	
 	public Node getNode(){
-		return node.copy();
+		return node == null ? null : node.copy();
 	}
 	
 	public List<Token> getRemainder(){
