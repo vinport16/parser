@@ -20,6 +20,7 @@ public enum NonTerminalSymbol implements Symbol{
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.put(TerminalSymbol.PLUS, SymbolSequence.build(TerminalSymbol.PLUS, TERM, EXPRESSION_TAIL));
 		produced.put(TerminalSymbol.MINUS, SymbolSequence.build(TerminalSymbol.MINUS, TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.CLOSE, SymbolSequence.EPSILON);
 		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(EXPRESSION_TAIL, produced);
 		
@@ -33,6 +34,9 @@ public enum NonTerminalSymbol implements Symbol{
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
 		produced.put(TerminalSymbol.TIMES, SymbolSequence.build(TerminalSymbol.TIMES, TERM, EXPRESSION_TAIL));
 		produced.put(TerminalSymbol.DIVIDE, SymbolSequence.build(TerminalSymbol.DIVIDE, TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.PLUS, SymbolSequence.EPSILON);
+		produced.put(TerminalSymbol.MINUS, SymbolSequence.EPSILON);
+		produced.put(TerminalSymbol.CLOSE, SymbolSequence.EPSILON);
 		produced.put(null, SymbolSequence.EPSILON);
 		productions.put(TERM_TAIL, produced);
 		
@@ -53,16 +57,17 @@ public enum NonTerminalSymbol implements Symbol{
 	// Parses a list of tokens into an expression tree
 	// Returns Optional ParseState with node as the root of the tree
 	static final Optional<Node> parseInput(List<Token> input){
-		return Optional.ofNullable(EXPRESSION.parse(Objects.requireNonNull(input)).getNode());
+		ParseState parsedExpression = EXPRESSION.parse(Objects.requireNonNull(input));
+		if(parsedExpression.getSuccess()){
+			return Optional.ofNullable(parsedExpression.getNode());
+		}else {
+			return Optional.empty();
+		}
 	}
 	
 	// Parses a list of tokens into one of its own symbol lists
 	// Returns ParseState if successful, ParseState.FAILURE otherwise
 	public ParseState parse(List<Token> input){
-		if(input.size() < 1) {
-			return productions.get(this).get(null).match(Objects.requireNonNull(input));
-		}else {
-			return productions.get(this).get(input.get(0).getType()).match(Objects.requireNonNull(input));
-		}
+		return productions.get(this).get(Objects.requireNonNull(input).isEmpty() ? null : input.get(0).getType()).match(input);
 	}
 }
