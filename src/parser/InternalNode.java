@@ -63,8 +63,9 @@ public final class InternalNode implements Node{
   }
   
   public static class Builder {
-	  private List<Node> children = new ArrayList();
+	  private List<Node> children = new ArrayList<Node>();
 	  
+	  // Adds child to children array if not null
 	  public boolean addChild(Node node) {
 		  if (node == null) {
 			  return false;
@@ -73,6 +74,8 @@ public final class InternalNode implements Node{
 		  return true;
 	  }
 	  
+	  // Removes all childless nodes from the children list and
+	  // if children list only contains single InternalNode, replace it with its children
 	  public Builder simplify() {
 		  children = children.stream().filter(child -> child.isFruitful()).collect(Collectors.toList());
 		  if (children.size() == 1 && children.get(0).getChildren() != null) {
@@ -81,6 +84,7 @@ public final class InternalNode implements Node{
 		  return this;
 	  }
 	  
+	  // Returns new InternalNode with simplified children list
 	  public Node build() {
 		  return InternalNode.build(children);
 	  }
