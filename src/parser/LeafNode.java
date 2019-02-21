@@ -40,5 +40,13 @@ public final class LeafNode implements Node{
   public boolean isFruitful() {
   	return true;
   }
+  
+  public boolean isOperator() {
+  	return token.isOperator();
+  }
+  
+	public boolean isStartedByOperator(){
+		return false;
+	}
 
 }

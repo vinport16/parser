@@ -7,4 +7,6 @@ public interface Node {
 	public List<Token> toList();
 	public List<Node> getChildren();
 	public boolean isFruitful();
+	public boolean isOperator();
+	public boolean isStartedByOperator();
 }

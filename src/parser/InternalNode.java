@@ -85,5 +85,13 @@ public final class InternalNode implements Node{
 		  return InternalNode.build(children);
 	  }
   }
+  
+  public boolean isOperator(){
+  	return false;
+  }
+  
+	public boolean isStartedByOperator(){
+		return children.isEmpty() ? false : children.get(0).isOperator();
+	}
 
 }
