@@ -70,6 +70,26 @@ public final class InternalNode implements Node{
 		  return children.add(Objects.requireNonNull(node));
 	  }
 	  
+	  
+	  private void replaceWithChildren() {
+		  for (int i = 0; i < children.size() - 1; i++) {
+			  if (!children.get(i).isOperator() && children.get(i+1).isStartedByOperator()) {
+				  Node nodeIsStarted = children.get(i+1);
+				  children.remove(i+1);
+				  children.addAll(i+1, nodeIsStarted.getChildren());
+			  }
+		  }
+	  }
+	  
+	  private void replaceWithGrandchild() {
+		  for (int i = 0; i < children.size(); i++) {
+			  Node child = children.get(i);
+			  if (child.isSingleLeafParent()) {
+				 children.set(i, child.firstChild().get());
+			  }
+		  }
+	  }
+	  
 	  // Removes all childless nodes from the children list and
 	  // if children list only contains single InternalNode, replace it with its children
 	  public Builder simplify() {
@@ -77,13 +97,15 @@ public final class InternalNode implements Node{
 		  if (children.size() == 1 && children.get(0).getChildren() != null) {
 			  children = children.get(0).getChildren();
 		  }
+		  this.replaceWithChildren();
+		  this.replaceWithGrandchild();
 		  return this;
 	  }
 	  
 	  // Returns new InternalNode with simplified children list
 	  public Node build() {
 	  	this.simplify();
-		  return InternalNode.build(children);
+		return InternalNode.build(children);
 	  }
   }
   
@@ -91,8 +113,16 @@ public final class InternalNode implements Node{
   	return false;
   }
   
-	public boolean isStartedByOperator(){
-		return children.isEmpty() ? false : children.get(0).isOperator();
-	}
+  public boolean isStartedByOperator(){
+	return children.isEmpty() ? false : children.get(0).isOperator();
+  }
+  
+  public Optional<Node> firstChild() {
+	return (this.isFruitful() || children.size() > 0) ? Optional.of(children.get(0)) : Optional.empty();
+  }
+  
+  public boolean isSingleLeafParent() {
+	return (children.size() == 1 && children.get(0).getChildren() == null);
+  }
 
 }

@@ -9,4 +9,6 @@ public interface Node {
 	public boolean isFruitful();
 	public boolean isOperator();
 	public boolean isStartedByOperator();
+	public Optional<Node> firstChild();
+	public boolean isSingleLeafParent();
 }

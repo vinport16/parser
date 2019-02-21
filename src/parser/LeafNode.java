@@ -45,8 +45,16 @@ public final class LeafNode implements Node{
   	return token.isOperator();
   }
   
-	public boolean isStartedByOperator(){
-		return false;
-	}
+  public boolean isStartedByOperator(){
+	return false;
+  }
+  
+  public Optional<Node> firstChild() {
+	return Optional.empty();
+  }
+  
+  public boolean isSingleLeafParent() {
+	return false;
+  }
 
 }
