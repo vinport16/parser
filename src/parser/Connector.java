@@ -1,5 +1,7 @@
 package parser;
 
+import java.util.List;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public final class Connector extends AbstractToken {
@@ -7,6 +9,7 @@ public final class Connector extends AbstractToken {
 	TerminalSymbol type;
 	private static Cache<TerminalSymbol, Connector> cache = new Cache<TerminalSymbol, Connector>();
 	private static HashMap<TerminalSymbol, String> map = new HashMap<TerminalSymbol, String>();
+	private static List<TerminalSymbol> operators = Arrays.asList(TerminalSymbol.PLUS,TerminalSymbol.MINUS,TerminalSymbol.TIMES,TerminalSymbol.DIVIDE);
 	
 	// Populates hashmap field with mapping from TerminalSymbol enum to String
 	static {
@@ -47,5 +50,10 @@ public final class Connector extends AbstractToken {
 	// Overrides toString method, returns string representation of TerminalSymbol
 	public String toString() {
 		return map.get(type);
+	}
+	
+	// Returns whether this connector is an operator
+	public boolean isOperator(){
+		return operators.contains(this.type);
 	}
 }

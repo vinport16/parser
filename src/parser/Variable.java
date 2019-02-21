@@ -37,5 +37,10 @@ public final class Variable extends AbstractToken {
 	public String toString() {
 		return representation;
 	}
+	
+	// Returns whether this variable is an operator (no variables are operators)
+	public boolean isOperator(){
+		return false;
+	}
 
 }
