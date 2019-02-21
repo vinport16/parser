@@ -82,6 +82,7 @@ public final class InternalNode implements Node{
 	  
 	  // Returns new InternalNode with simplified children list
 	  public Node build() {
+	  	this.simplify();
 		  return InternalNode.build(children);
 	  }
   }
