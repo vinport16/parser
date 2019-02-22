@@ -28,14 +28,6 @@ public class Input {
 		return tokens;
 	}
 	
-	private static String repeatString(String s, int times) {
-		StringBuilder repeatedString = new StringBuilder();
-		for (int i = 0; i < times; i++) {
-			repeatedString.append(s);
-		}
-		return repeatedString.toString();
-	}
-	
 	private static void printParseTree(Node n) {
 		System.out.println("|");
 		printParseTree(n, "");
@@ -90,37 +82,3 @@ public class Input {
 		
 	}
 }
-
-/* 
- * For [a,+,b,-,[c,*,[[(,[g,/,b,+,e],)],/,a,-,h]]] :
- * 
- * |
- * |-{a
- * |-{+
- * |-{b
- * |-{-
- * |
- * |-|
- *   |-{c
- *   |-{*
- *   |
- *   |-|
- *     |-|
- *     | |-{(
- *     | |
- *     | |-|
- *     | | |-{g
- *     | | |-{/
- *     | | |-{b
- *     | | |-{+
- *     | | |-{e
- *     | |
- *     | |-{)
- *     | 
- *     |-|
- *       |-{/
- *       |-{a
- *       |-{-
- *       |-{h
- * 
- * */
