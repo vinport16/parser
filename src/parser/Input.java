@@ -38,21 +38,29 @@ public class Input {
 	
 	private static void printParseTree(Node n) {
 		System.out.println("|");
-		printParseTree(n, 0);
+		printParseTree(n, "");
 	}
 		
-	private static void printParseTree(Node n, int level) {
-		String frontSpace = repeatString(" ", level * 2);
-		for (Node child : n.getChildren()) {
+	private static void printParseTree(Node n, String frontSpace) {
+		for (int i = 0; i < n.getChildren().size(); i++) {
+			Node child = n.getChildren().get(i);
+			
 			if (child instanceof LeafNode) {
 				System.out.println(frontSpace + "|-" + child.toString());
 			} else {
+				
 				System.out.println(frontSpace + "|");
 				System.out.println(frontSpace + "|-|");
-				printParseTree(child, level+1);
+				
+				if(i < n.getChildren().size()-1) {
+					printParseTree(child, frontSpace+"| ");
+					System.out.println(frontSpace + "|");
+				}else {
+					printParseTree(child, frontSpace+"  ");
+				}
+				
 			}
 		}
-		System.out.println(frontSpace + "|");
 	}
 	
 	public static void main(String[] args) {
