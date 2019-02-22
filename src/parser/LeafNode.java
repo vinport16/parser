@@ -41,18 +41,22 @@ public final class LeafNode implements Node{
   	return true;
   }
   
+  // Returns true if the node is a leaf corresponding to an operator, and false otherwise
   public boolean isOperator() {
   	return token.isOperator();
   }
   
+  // Returns true if the node’s first child is an operator, and false otherwise
   public boolean isStartedByOperator(){
 	return false;
   }
   
+  //  Returns the first child of this node, or empty if the node is either a leaf or unfruitful.
   public Optional<Node> firstChild() {
 	return Optional.empty();
   }
   
+  // Returns true if this node’s only child is a leaf, and false otherwise.
   public boolean isSingleLeafParent() {
 	return false;
   }
