@@ -1,13 +1,15 @@
-# Assignment 4 - Vincent Portelli and Jason Shin
+# Assignment 5 - Vincent Portelli and Jason Shin
 
 * To compile all the java files: javac *.java
 * To run all of the tests: java Tests.java
 * Vincent
-	* Implemented getChildren() and isFruitful() methods to Node and their implementations
-	* Finished populating new productions Map
-	* Modified the parse() method in NonTerminalSymbol to work with the new productions Map.
+	* Implemented isOperator() in Token and its derived classes
+	* Implemented isOperator() and isStartedByOperator() methods in Node and its derived classes
+	* Implemented command line interface to accept a string and converted it to a token list to pass in to NonTerminalSymbol.parseInput()
+	* Came up with design to represent tree in the command line
 
 * Jason
-	* Created the Builder static nested class and implemented addChild(), simplify(), and build() methods
-	* Replaced productoins to `Map<NonTerminalSymbol,Map<TerminalSymbol, SymbolSequence>>`
-	* Began populating the new productions Map
+	* Implemented firstChild(), and isSingleLeafParent() methods in Node and its derived classes
+	* Implemented the simplification to replace an InternalNode with its children whenever the InternalNode starts with an operator
+	* Implemented the simplification to replace child with its grandchild when a node is a parent of an InternalNode whose only child is a leaf
+	* Worked on displaying parse tree in command line

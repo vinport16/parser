@@ -31,8 +31,8 @@ public enum NonTerminalSymbol implements Symbol{
 		productions.put(TERM, produced);
 		
 		produced = new HashMap<TerminalSymbol, SymbolSequence>();
-		produced.put(TerminalSymbol.TIMES, SymbolSequence.build(TerminalSymbol.TIMES, TERM, EXPRESSION_TAIL));
-		produced.put(TerminalSymbol.DIVIDE, SymbolSequence.build(TerminalSymbol.DIVIDE, TERM, EXPRESSION_TAIL));
+		produced.put(TerminalSymbol.TIMES, SymbolSequence.build(TerminalSymbol.TIMES, UNARY, TERM_TAIL));
+		produced.put(TerminalSymbol.DIVIDE, SymbolSequence.build(TerminalSymbol.DIVIDE, UNARY, TERM_TAIL));
 		produced.put(TerminalSymbol.PLUS, SymbolSequence.EPSILON);
 		produced.put(TerminalSymbol.MINUS, SymbolSequence.EPSILON);
 		produced.put(TerminalSymbol.CLOSE, SymbolSequence.EPSILON);

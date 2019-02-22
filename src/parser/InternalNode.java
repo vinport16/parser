@@ -70,7 +70,8 @@ public final class InternalNode implements Node{
 		  return children.add(Objects.requireNonNull(node));
 	  }
 	  
-	  
+	  // Replaces InternalNode with its children if the first of two adjacent Nodes
+	  // is not an operator  and the next is an InternalNode that starts with an operator
 	  private void replaceWithChildren() {
 		  for (int i = 0; i < children.size() - 1; i++) {
 			  if (!children.get(i).isOperator() && children.get(i+1).isStartedByOperator()) {
@@ -81,6 +82,8 @@ public final class InternalNode implements Node{
 		  }
 	  }
 	  
+	  // If the Node is a parent of an internal node whose only child is a leaf, the child
+	  // is replaced with the grandchild.
 	  private void replaceWithGrandchild() {
 		  for (int i = 0; i < children.size(); i++) {
 			  Node child = children.get(i);
@@ -109,20 +112,24 @@ public final class InternalNode implements Node{
 	  }
   }
   
+  // Returns true if the node is a leaf corresponding to an operator, and false otherwise
   public boolean isOperator(){
   	return false;
   }
   
+  // Returns true if the node’s first child is an operator, and false otherwise
   public boolean isStartedByOperator(){
 	return children.isEmpty() ? false : children.get(0).isOperator();
   }
   
+  //  Returns the first child of this node, or empty if the node is either a leaf or unfruitful.
   public Optional<Node> firstChild() {
 	return (this.isFruitful() || children.size() > 0) ? Optional.of(children.get(0)) : Optional.empty();
   }
-  
+
+  // Returns true if this node’s only child is a leaf, and false otherwise.
   public boolean isSingleLeafParent() {
-	return (children.size() == 1 && children.get(0).getChildren() == null);
+	return (children.size() == 1 && children.get(0) instanceof LeafNode);
   }
 
 }

@@ -28,6 +28,33 @@ public class Input {
 		return tokens;
 	}
 	
+	private static String repeatString(String s, int times) {
+		StringBuilder repeatedString = new StringBuilder();
+		for (int i = 0; i < times; i++) {
+			repeatedString.append(s);
+		}
+		return repeatedString.toString();
+	}
+	
+	private static void printParseTree(Node n) {
+		System.out.println("|");
+		printParseTree(n, 0);
+	}
+		
+	private static void printParseTree(Node n, int level) {
+		String frontSpace = repeatString(" ", level * 2);
+		for (Node child : n.getChildren()) {
+			if (child instanceof LeafNode) {
+				System.out.println(frontSpace + "|-" + child.toString());
+			} else {
+				System.out.println(frontSpace + "|");
+				System.out.println(frontSpace + "|-|");
+				printParseTree(child, level+1);
+			}
+		}
+		System.out.println(frontSpace + "|");
+	}
+	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		String line;
@@ -44,7 +71,8 @@ public class Input {
 			exp = NonTerminalSymbol.parseInput(stringToTokenList(line));
 			
 			if(exp.isPresent()) {
-				System.out.println(exp.get().toString());
+				printParseTree(exp.get());
+				//System.out.println(exp.get().toString());
 			}else {
 				System.out.println("error parsing expression");
 			}
