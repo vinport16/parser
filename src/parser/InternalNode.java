@@ -100,9 +100,7 @@ public final class InternalNode implements Node{
 		  if (children.size() == 1 && children.get(0).getChildren() != null) {
 			  children = children.get(0).getChildren();
 		  }
-		  System.out.println(children);
 		  this.replaceWithChildren();
-		  //System.out.println(children);
 		  this.replaceWithGrandchild();
 		  return this;
 	  }
