@@ -37,8 +37,6 @@ final class SymbolSequence {
 		ParseState result;
 		
 		for (Symbol symbol : production) {
-			System.out.println(symbol);
-			System.out.println("--> " + remainder.toString());
 			result = symbol.parse(remainder);
 			
 			if (!result.getSuccess()) {
